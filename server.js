@@ -10,6 +10,10 @@ app.get('/', (req, res) => {
   res.send(read('./public/index.html', 'utf8'));
 });
 
+app.get('/categories', (req, res) => {
+  res.send(['#programming', '#speedruns', '#music']);
+});
+
 const server = app.listen(process.env.PORT, () => {
   const host = server.address().address;
   const port = server.address().port;
