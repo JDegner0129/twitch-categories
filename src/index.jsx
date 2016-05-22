@@ -16,7 +16,6 @@ class CategoriesApp extends Component {
 
     this.state = {
       categories: [],
-      streams: [],
     };
 
     this.renderCategories = this.renderCategories.bind(this);

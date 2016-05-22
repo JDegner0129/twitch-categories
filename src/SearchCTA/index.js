@@ -6,7 +6,7 @@ export default function SearchCTA(props) {
   return (
     <div className={style.searchCta}>
       <h3 className={style.ctaTitle}>{props.title}</h3>
-      <p className={style.ctaDescription}>{props.description}</p>
+      <p>{props.description}</p>
     </div>
   );
 }
