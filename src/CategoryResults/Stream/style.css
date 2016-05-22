@@ -1,0 +1,23 @@
+:local(.stream) {
+  margin: 1rem;
+}
+
+:local(.streamImg:hover) {
+  cursor: pointer;
+}
+
+:local(.streamStatus) {
+  width: 320px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  margin: .2rem 0;
+}
+
+:local(.streamViewers) {
+  margin: 0;
+}
+
+:local(.streamChannel) {
+  display: inline;
+}

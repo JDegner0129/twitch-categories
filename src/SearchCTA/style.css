@@ -1,0 +1,16 @@
+:local(.searchCta) {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+  color: rgb(140, 140, 140);
+  margin-top: 5rem;
+}
+
+:local(.ctaTitle) {
+  margin: 0;
+}
+
+:local(.ctaDescription) {
+
+}

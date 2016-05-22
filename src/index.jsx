@@ -1,13 +1,18 @@
-import React, { Component } from 'react';
-import ReactDOM from 'react-dom';
+import React, { Component, PropTypes } from 'react';
+import { render } from 'react-dom';
+import { Router, Route, browserHistory } from 'react-router';
 
+import SearchCTA from './SearchCTA';
+import CategoryResults from './CategoryResults';
+import Category from './Category';
 import style from './style.css';
+
 import 'babel-polyfill';
 import 'whatwg-fetch';
 
 class CategoriesApp extends Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
 
     this.state = {
       categories: [],
@@ -15,8 +20,7 @@ class CategoriesApp extends Component {
     };
 
     this.renderCategories = this.renderCategories.bind(this);
-    this.renderStreams = this.renderStreams.bind(this);
-    this.onCategoryClick = this.onCategoryClick.bind(this);
+    this.renderChildren = this.renderChildren.bind(this);
   }
 
   componentDidMount() {
@@ -25,32 +29,44 @@ class CategoriesApp extends Component {
       .then(json => this.setState({ categories: json }));
   }
 
-  onCategoryClick(category) {
-    return () => {
-      fetch(`https://api.twitch.tv/kraken/search/streams?q=${encodeURIComponent(category)}`)
-        .then(res => res.json())
-        .then(json => this.setState({ streams: json.streams }));
-    };
-  }
-
-  renderStreams() {
-    return this.state.streams.map(s => <div key={s.channel.status}>{s.channel.status}</div>);
-  }
-
   renderCategories() {
-    return this.state.categories.map(c => <li key={c} onClick={this.onCategoryClick(c)}>{c}</li>);
+    return this.state.categories.map(c => <Category key={c} category={c} />);
+  }
+
+  renderChildren() {
+    if (this.props.children) {
+      return this.props.children;
+    }
+    return (
+      <SearchCTA
+        title="No Streams Found"
+        description="Use one of the category links above to find streams for a category you're interested in."
+      />
+    );
   }
 
   render() {
     return (
       <div>
-        <ul className={style.app}>{this.renderCategories()}</ul>
-        <div>
-          {this.renderStreams()}
+        <div className={style.header}>
+          <h1>Twitch Categories</h1>
+          <h2>Browse "categories" on Twitch.tv, determined by tags in the stream title.</h2>
+          <ul className={style.categories}>{this.renderCategories()}</ul>
         </div>
+        {this.renderChildren()}
       </div>
     );
   }
 }
 
-ReactDOM.render(<CategoriesApp />, document.querySelector('#app'));
+CategoriesApp.propTypes = {
+  children: PropTypes.node,
+};
+
+render((
+  <Router history={browserHistory}>
+    <Route path="/" component={CategoriesApp}>
+      <Route path="categories/:category" component={CategoryResults} />
+    </Route>
+  </Router>
+), document.querySelector('#app'));

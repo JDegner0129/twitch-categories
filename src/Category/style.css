@@ -1,0 +1,15 @@
+:local(.category) {
+  display: inline-block;
+  margin-right: 1rem;
+  padding: .7rem;
+  border: .1rem solid white;
+  border-radius: .7rem;
+  text-decoration: none;
+  color: white;
+}
+
+:local(.category:hover) {
+  cursor: pointer;
+  background-color: white;
+  text-decoration: none;
+}

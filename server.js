@@ -14,6 +14,14 @@ app.get('/categories', (req, res) => {
   res.send(['#programming', '#speedruns', '#music']);
 });
 
+app.get('/categories/index.js', (req, res) => {
+  res.redirect('/index.js');
+});
+
+app.get('/categories/:category', (req, res) => {
+  res.send(read('./public/index.html', 'utf8'));
+});
+
 const server = app.listen(process.env.PORT, () => {
   const host = server.address().address;
   const port = server.address().port;
