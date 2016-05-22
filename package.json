@@ -1,0 +1,24 @@
+{
+  "name": "twitch-categories",
+  "version": "0.1.0",
+  "description": "Categorization for twitch.tv streams",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jdegner0129/twitch-categories.git"
+  },
+  "keywords": [
+    "react",
+    "redis",
+    "twitch"
+  ],
+  "author": "Jordan Degner <jdegner0129@gmail.com>",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/jdegner0129/twitch-categories/issues"
+  },
+  "homepage": "https://github.com/jdegner0129/twitch-categories#readme"
+}
