@@ -8,6 +8,13 @@
   color: white;
 }
 
+:local(.active) {
+  cursor: pointer;
+  background-color: white;
+  text-decoration: none;
+  color: #6441a4;
+}
+
 :local(.category:hover) {
   cursor: pointer;
   background-color: white;

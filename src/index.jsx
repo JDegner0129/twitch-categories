@@ -29,7 +29,15 @@ class CategoriesApp extends Component {
   }
 
   renderCategories() {
-    return this.state.categories.map(c => <Category key={c} category={c} />);
+    const category = this.props.params.category;
+
+    return this.state.categories.map(c => (
+      <Category
+        key={c}
+        category={c}
+        isActive={c === category}
+      />
+    ));
   }
 
   renderChildren() {
@@ -60,6 +68,7 @@ class CategoriesApp extends Component {
 
 CategoriesApp.propTypes = {
   children: PropTypes.node,
+  params: PropTypes.object.isRequired,
 };
 
 render((
