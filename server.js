@@ -11,7 +11,7 @@ app.get('/', (req, res) => {
 });
 
 app.get('/categories', (req, res) => {
-  res.send(['#programming', '#speedruns', '#music']);
+  res.send(['#react', '#speedruns', '#webdev', '#fgc', '#letsplay']);
 });
 
 app.get('/categories/index.js', (req, res) => {

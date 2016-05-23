@@ -1,8 +1,11 @@
 import React, { PropTypes, Component } from 'react';
 
+import Pager from './Pager';
 import SearchCTA from '../SearchCTA';
 import Stream from './Stream';
 import style from './style.css';
+
+const BASE_API_URL = 'https://api.twitch.tv/kraken/search/streams';
 
 export default class CategoryResults extends Component {
   constructor(props) {
@@ -11,25 +14,48 @@ export default class CategoryResults extends Component {
     this.state = {
       streams: [],
       searchComplete: false,
+      nextPageUrl: null,
+      prevPageUrl: null,
     };
 
     this.fetchStreams = this.fetchStreams.bind(this);
+    this.getNextPage = this.getNextPage.bind(this);
+    this.getPreviousPage = this.getPreviousPage.bind(this);
+    this.renderStreams = this.renderStreams.bind(this);
+    this.renderPager = this.renderPager.bind(this);
   }
 
   componentDidMount() {
-    this.fetchStreams(this.props.params.category);
+    const fetchUrl = `${BASE_API_URL}?q=${encodeURIComponent(this.props.params.category)}`;
+
+    this.fetchStreams(fetchUrl);
   }
 
   componentWillReceiveProps(nextProps) {
-    this.fetchStreams(nextProps.params.category);
+    const fetchUrl = `${BASE_API_URL}?q=${encodeURIComponent(nextProps.params.category)}`;
+
+    this.fetchStreams(fetchUrl);
   }
 
-  fetchStreams(category) {
+  getNextPage() {
+    this.fetchStreams(this.state.nextPageUrl);
+  }
+
+  getPreviousPage() {
+    this.fetchStreams(this.state.prevPageUrl);
+  }
+
+  fetchStreams(fetchUrl) {
     this.setState({ searchComplete: false });
 
-    fetch(`https://api.twitch.tv/kraken/search/streams?q=${encodeURIComponent(category)}`)
+    fetch(fetchUrl)
       .then(res => res.json())
-      .then(json => this.setState({ streams: json.streams, searchComplete: true }));
+      .then(json => (this.setState({
+        streams: json.streams,
+        searchComplete: true,
+        prevPageUrl: json.streams.length ? json._links.prev : null,
+        nextPageUrl: json.streams.length ? json._links.next : null,
+      })));
   }
 
   renderStreams() {
@@ -59,10 +85,31 @@ export default class CategoryResults extends Component {
     );
   }
 
+  renderPager() {
+    if (!this.state.searchComplete) {
+      return null;
+    }
+
+    const enableNext = !!this.state.nextPageUrl;
+    const enablePrev = !!this.state.prevPageUrl;
+
+    return (
+      <Pager
+        enableNext={enableNext}
+        enablePrev={enablePrev}
+        onNextClick={this.getNextPage}
+        onPrevClick={this.getPreviousPage}
+      />
+    );
+  }
+
   render() {
     return (
-      <div className={style.streams}>
-        {this.renderStreams()}
+      <div>
+        <div className={style.streams}>
+          {this.renderStreams()}
+        </div>
+        {this.renderPager()}
       </div>
     );
   }

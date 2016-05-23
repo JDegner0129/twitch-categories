@@ -1,0 +1,15 @@
+:local(.pager) {
+  display: flex;
+}
+
+:local(.alignLeft) {
+  justify-content: flex-start;
+}
+
+:local(.alignRight) {
+  justify-content: flex-end;
+}
+
+:local(.alignBoth) {
+  justify-content: space-between;
+}

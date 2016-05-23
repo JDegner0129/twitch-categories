@@ -57,7 +57,7 @@ class CategoriesApp extends Component {
       <div>
         <div className={style.header}>
           <h1>Twitch Categories</h1>
-          <h2>Browse "categories" on Twitch.tv, determined by tags in the stream title.</h2>
+          <h2>Browse categories on Twitch.tv, determined by tags in the stream title.</h2>
           <ul className={style.categories}>{this.renderCategories()}</ul>
         </div>
         {this.renderChildren()}

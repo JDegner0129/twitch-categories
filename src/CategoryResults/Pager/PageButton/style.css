@@ -1,0 +1,13 @@
+:local(.pageButton) {
+  padding: .7rem;
+  border: .1rem solid #6441a4;
+  border-radius: .7rem;
+  color: #6441a4;
+  margin: 1rem;
+}
+
+:local(.pageButton:hover) {
+  cursor: pointer;
+  background-color: #6441a4;
+  color: white;
+}
