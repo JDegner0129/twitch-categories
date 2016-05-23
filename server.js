@@ -1,8 +1,11 @@
 const express = require('express');
 const fs = require('fs');
+const Redis = require('ioredis');
 
 const read = fs.readFileSync;
 const app = express();
+
+const redis = new Redis();
 
 app.use(express.static('public'));
 
@@ -11,7 +14,9 @@ app.get('/', (req, res) => {
 });
 
 app.get('/categories', (req, res) => {
-  res.send(['#react', '#speedruns', '#webdev', '#fgc', '#letsplay']);
+  redis.keys('*').then(keys => {
+    res.send(keys);
+  });
 });
 
 app.get('/categories/index.js', (req, res) => {
